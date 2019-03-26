@@ -18,33 +18,33 @@ import javax.swing.ImageIcon;
  * @author Brigels Pacheco
  */
 public class vistaPrincipal extends javax.swing.JFrame {
-    
-    
+
     /**
      * Creates new form vistaPrincipal
      */
     public vistaPrincipal() {
-        
+
+        //color de fondo
         this.getContentPane().setBackground(Color.decode("#808080"));
-         //centrarlo
+
+        //centrarlo
         Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
         int height = pantalla.height;
         int width = pantalla.width;
-        setSize(width/2, height);
+        setSize(width / 2, height);
 
         setLocationRelativeTo(null);
         setVisible(true);
-        
-        
-        
-        
-        
+
         initComponents();
+
+        //boton agregar seleccionado desde el inicio
         rbtnAgregar.setSelected(true);
-             
-   ImageIcon fot = new ImageIcon("src/imagenes/estudiante-icono.png");
+
+        //imagen de icono
+        ImageIcon fot = new ImageIcon("src/imagenes/estudiante-icono.png");
         Icon icono = new ImageIcon(fot.getImage().getScaledInstance(imagen.getWidth(), imagen.getHeight(), Image.SCALE_DEFAULT));
-       imagen.setIcon(icono);
+        imagen.setIcon(icono);
         this.repaint();
     }
 
@@ -291,63 +291,66 @@ public class vistaPrincipal extends javax.swing.JFrame {
 
     private void btnAccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAccionActionPerformed
         // TODO add your handling code here:
-        if(txtNombre.getText().equals("") || TxtApellido.getText().equals("")){
+        if (txtNombre.getText().equals("") || TxtApellido.getText().equals("")) {
             lblAdvertencia.setText("Datos no validos");
         }
     }//GEN-LAST:event_btnAccionActionPerformed
 
     private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
         // TODO add your handling code here:
-        if(Character.isDigit(evt.getKeyChar()) || evt.getKeyChar()==KeyEvent.VK_SPACE){
-        evt.consume();}
+        if (Character.isDigit(evt.getKeyChar()) || evt.getKeyChar() == KeyEvent.VK_SPACE) {
+            evt.consume();
+        }
     }//GEN-LAST:event_txtNombreKeyTyped
 
     private void TxtApellidoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtApellidoKeyTyped
         // TODO add your handling code here:
-         if(Character.isDigit(evt.getKeyChar()) || evt.getKeyChar()==KeyEvent.VK_SPACE){
-        evt.consume();}
+        if (Character.isDigit(evt.getKeyChar()) || evt.getKeyChar() == KeyEvent.VK_SPACE) {
+            evt.consume();
+        }
     }//GEN-LAST:event_TxtApellidoKeyTyped
 
     private void txtNombreKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyPressed
         // TODO add your handling code here:
-        if(evt.getKeyChar()==KeyEvent.VK_ENTER){
-        TxtApellido.requestFocus();
-       }
-        
+        if (evt.getKeyChar() == KeyEvent.VK_ENTER) {
+            TxtApellido.requestFocus();
+        }
+
     }//GEN-LAST:event_txtNombreKeyPressed
 
     private void TxtApellidoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtApellidoKeyPressed
         // TODO add your handling code here:
-         if(evt.getKeyChar()==KeyEvent.VK_ENTER){
-        rbtnAgregar.requestFocus();}
+        if (evt.getKeyChar() == KeyEvent.VK_ENTER) {
+            rbtnAgregar.requestFocus();
+        }
     }//GEN-LAST:event_TxtApellidoKeyPressed
 
     private void rbtnAgregarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_rbtnAgregarKeyPressed
         // TODO add your handling code here:
-         if(evt.getKeyChar()==KeyEvent.VK_ENTER){
-        btnAccion.doClick();
-       }
+        if (evt.getKeyChar() == KeyEvent.VK_ENTER) {
+            btnAccion.doClick();
+        }
     }//GEN-LAST:event_rbtnAgregarKeyPressed
 
     private void rbtnBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_rbtnBuscarKeyPressed
         // TODO add your handling code here:
-        if(evt.getKeyChar()==KeyEvent.VK_ENTER){
-        btnAccion.doClick();
-       }
+        if (evt.getKeyChar() == KeyEvent.VK_ENTER) {
+            btnAccion.doClick();
+        }
     }//GEN-LAST:event_rbtnBuscarKeyPressed
 
     private void rbtnEditarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_rbtnEditarKeyPressed
         // TODO add your handling code here:
-        if(evt.getKeyChar()==KeyEvent.VK_ENTER){
-        btnAccion.doClick();
-       }
+        if (evt.getKeyChar() == KeyEvent.VK_ENTER) {
+            btnAccion.doClick();
+        }
     }//GEN-LAST:event_rbtnEditarKeyPressed
 
     private void rbtnEliminarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_rbtnEliminarKeyPressed
         // TODO add your handling code here:
-        if(evt.getKeyChar()==KeyEvent.VK_ENTER){
-        btnAccion.doClick();
-       }
+        if (evt.getKeyChar() == KeyEvent.VK_ENTER) {
+            btnAccion.doClick();
+        }
     }//GEN-LAST:event_rbtnEliminarKeyPressed
 
     /**
