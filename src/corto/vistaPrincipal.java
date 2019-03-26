@@ -27,38 +27,175 @@ public class vistaPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btngOpciones = new javax.swing.ButtonGroup();
+        lblNombre = new javax.swing.JLabel();
+        txtNombre = new javax.swing.JTextField();
+        lblApellido = new javax.swing.JLabel();
+        TxtApellido = new javax.swing.JTextField();
+        lblRegistro = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        rbtnGuardar = new javax.swing.JRadioButton();
+        rbtnBuscar = new javax.swing.JRadioButton();
+        rbtnEditar = new javax.swing.JRadioButton();
+        rbtnEliminar = new javax.swing.JRadioButton();
+        btnAccion = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        lstEstudiantes = new javax.swing.JList<>();
+        lblResultados = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("jLabel1");
+        lblNombre.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblNombre.setText("Nombre:");
 
-        jTextField1.setText("jTextField1");
+        txtNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNombreActionPerformed(evt);
+            }
+        });
+
+        lblApellido.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblApellido.setText("Apellido:");
+
+        lblRegistro.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblRegistro.setText("Registro");
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel1.setText("¿Que desea hacer?");
+
+        btngOpciones.add(rbtnGuardar);
+        rbtnGuardar.setText("Guardar");
+        rbtnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbtnGuardarActionPerformed(evt);
+            }
+        });
+
+        btngOpciones.add(rbtnBuscar);
+        rbtnBuscar.setText("Buscar");
+        rbtnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbtnBuscarActionPerformed(evt);
+            }
+        });
+
+        btngOpciones.add(rbtnEditar);
+        rbtnEditar.setText("Editar");
+        rbtnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbtnEditarActionPerformed(evt);
+            }
+        });
+
+        btngOpciones.add(rbtnEliminar);
+        rbtnEliminar.setText("Eliminar");
+        rbtnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbtnEliminarActionPerformed(evt);
+            }
+        });
+
+        btnAccion.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnAccion.setText("OK");
+        btnAccion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAccionActionPerformed(evt);
+            }
+        });
+
+        jScrollPane1.setViewportView(lstEstudiantes);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnAccion)
+                        .addGap(17, 17, 17)))
+                .addGap(152, 152, 152))
             .addGroup(layout.createSequentialGroup()
                 .addGap(72, 72, 72)
-                .addComponent(jLabel1)
-                .addGap(53, 53, 53)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(182, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1)
+                    .addComponent(rbtnEliminar)
+                    .addComponent(rbtnEditar)
+                    .addComponent(rbtnBuscar)
+                    .addComponent(rbtnGuardar)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblApellido)
+                            .addComponent(lblNombre))
+                        .addGap(53, 53, 53)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblRegistro)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(txtNombre)
+                                .addComponent(TxtApellido, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE))))
+                    .addComponent(lblResultados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(70, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblRegistro)
                 .addGap(38, 38, 38)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(242, Short.MAX_VALUE))
+                    .addComponent(lblNombre)
+                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(23, 23, 23)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblApellido)
+                    .addComponent(TxtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(35, 35, 35)
+                .addComponent(jLabel1)
+                .addGap(20, 20, 20)
+                .addComponent(rbtnGuardar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(rbtnBuscar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(rbtnEditar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(rbtnEliminar)
+                .addGap(18, 18, 18)
+                .addComponent(btnAccion)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(lblResultados, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNombreActionPerformed
+
+    private void rbtnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnGuardarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rbtnGuardarActionPerformed
+
+    private void rbtnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnBuscarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rbtnBuscarActionPerformed
+
+    private void rbtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnEliminarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rbtnEliminarActionPerformed
+
+    private void rbtnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnEditarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rbtnEditarActionPerformed
+
+    private void btnAccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAccionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAccionActionPerformed
 
     /**
      * @param args the command line arguments
@@ -96,7 +233,20 @@ public class vistaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField TxtApellido;
+    private javax.swing.JButton btnAccion;
+    private javax.swing.ButtonGroup btngOpciones;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblApellido;
+    private javax.swing.JLabel lblNombre;
+    private javax.swing.JLabel lblRegistro;
+    private javax.swing.JLabel lblResultados;
+    private javax.swing.JList<String> lstEstudiantes;
+    private javax.swing.JRadioButton rbtnBuscar;
+    private javax.swing.JRadioButton rbtnEditar;
+    private javax.swing.JRadioButton rbtnEliminar;
+    private javax.swing.JRadioButton rbtnGuardar;
+    private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 }
