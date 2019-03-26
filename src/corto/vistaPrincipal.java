@@ -23,6 +23,8 @@ public class vistaPrincipal extends javax.swing.JFrame {
      * Creates new form vistaPrincipal
      */
     public vistaPrincipal() {
+        //quitarle los botones de arriba
+        vistaPrincipal.super.setUndecorated(true);
 
         //color de fondo
         this.getContentPane().setBackground(Color.decode("#808080"));
@@ -37,6 +39,9 @@ public class vistaPrincipal extends javax.swing.JFrame {
         setVisible(true);
 
         initComponents();
+        
+        //ubicar el foco en el inicio
+        txtNombre.requestFocus();
 
         //boton agregar seleccionado desde el inicio
         rbtnAgregar.setSelected(true);
@@ -62,7 +67,6 @@ public class vistaPrincipal extends javax.swing.JFrame {
         txtNombre = new javax.swing.JTextField();
         lblApellido = new javax.swing.JLabel();
         TxtApellido = new javax.swing.JTextField();
-        lblRegistro = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         rbtnAgregar = new javax.swing.JRadioButton();
         rbtnBuscar = new javax.swing.JRadioButton();
@@ -74,6 +78,7 @@ public class vistaPrincipal extends javax.swing.JFrame {
         lblResultados = new javax.swing.JLabel();
         lblAdvertencia = new javax.swing.JLabel();
         imagen = new javax.swing.JLabel();
+        btnSalir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -105,9 +110,6 @@ public class vistaPrincipal extends javax.swing.JFrame {
                 TxtApellidoKeyTyped(evt);
             }
         });
-
-        lblRegistro.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        lblRegistro.setText("Registro");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel1.setText("¿Que desea hacer?");
@@ -180,34 +182,29 @@ public class vistaPrincipal extends javax.swing.JFrame {
 
         lblAdvertencia.setForeground(new java.awt.Color(255, 255, 255));
 
+        btnSalir.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnSalir.setText("salir");
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(152, 152, 152))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(lblAdvertencia, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(72, 72, 72)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jScrollPane1)
-                                .addComponent(rbtnEliminar)
-                                .addComponent(rbtnEditar)
-                                .addComponent(rbtnBuscar)
-                                .addComponent(rbtnAgregar)
-                                .addComponent(lblResultados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(101, 101, 101)
-                                .addComponent(lblRegistro))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane1)
+                            .addComponent(rbtnEliminar)
+                            .addComponent(rbtnEditar)
+                            .addComponent(rbtnBuscar)
+                            .addComponent(rbtnAgregar)
+                            .addComponent(lblResultados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(49, 49, 49)
                         .addComponent(imagen, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -226,13 +223,22 @@ public class vistaPrincipal extends javax.swing.JFrame {
                 .addGap(180, 180, 180)
                 .addComponent(btnAccion)
                 .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(152, 152, 152))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(lblAdvertencia, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addComponent(btnSalir, javax.swing.GroupLayout.Alignment.TRAILING)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblRegistro)
-                .addGap(38, 38, 38)
+                .addComponent(btnSalir)
+                .addGap(43, 43, 43)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -353,6 +359,11 @@ public class vistaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_rbtnEliminarKeyPressed
 
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_btnSalirActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -391,6 +402,7 @@ public class vistaPrincipal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField TxtApellido;
     private javax.swing.JButton btnAccion;
+    private javax.swing.JButton btnSalir;
     private javax.swing.ButtonGroup btngOpciones;
     private javax.swing.JLabel imagen;
     private javax.swing.JLabel jLabel1;
@@ -398,7 +410,6 @@ public class vistaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel lblAdvertencia;
     private javax.swing.JLabel lblApellido;
     private javax.swing.JLabel lblNombre;
-    private javax.swing.JLabel lblRegistro;
     private javax.swing.JLabel lblResultados;
     private javax.swing.JList<String> lstEstudiantes;
     private javax.swing.JRadioButton rbtnAgregar;
