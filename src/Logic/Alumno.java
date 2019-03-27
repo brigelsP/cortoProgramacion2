@@ -11,7 +11,7 @@ public class Alumno {
         this.nombre = nombre;
         this.apellido = apellido;
         this.grado = grado;
-        this.carnet = generate(nombre,apellido);
+        this.carnet = generate(nombre,apellido,grado);
     }
     
     //Getters
@@ -50,13 +50,21 @@ public class Alumno {
     
     private static int rel = 0;
     
-    public static String generate(String nombre, String apellido){
+    public static String generate(String nombre, String apellido, String grado){
     
         nombre = nombre.toLowerCase();
         apellido = apellido.toLowerCase();
         
-        return "" + nombre.charAt(0) + apellido.charAt(0) + String.valueOf(rel++);
+        return grado + nombre.charAt(0) + apellido.charAt(0) + String.valueOf(rel++);
     
+    }
+    
+    public static int compare(Alumno a, Alumno b){
+        
+        int k = a.getCarnet().compareTo(b.getCarnet());
+        
+        return k;
+        
     }
     
     
