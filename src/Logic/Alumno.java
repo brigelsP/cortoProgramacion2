@@ -14,6 +14,13 @@ public class Alumno {
         this.carnet = generate(nombre,apellido,grado);
     }
     
+    public Alumno(String nombre, String apellido, String grado, String carnet) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.grado = grado;
+        this.carnet = carnet;
+    }
+    
     //Getters
 
     public String getNombre() {
@@ -44,6 +51,10 @@ public class Alumno {
 
     public void setGrado(String grado) {
         this.grado = grado;
+    }
+    
+    public void setCarnet(String carnet){     
+        this.carnet = carnet;
     }
     
     //Generador de carnet con correlativo

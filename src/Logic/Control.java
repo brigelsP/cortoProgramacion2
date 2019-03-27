@@ -134,7 +134,7 @@ public class Control {
     
     //busqueda binaria para carnet de alumno
     
-    public static int buscar(ArrayList<Alumno> dbase, String carnet){
+    public static int buscar(String carnet, ArrayList<Alumno> dbase){
     
         int inicio = 0, fin = dbase.size() - 1;
         
@@ -158,11 +158,43 @@ public class Control {
         return -1;
     }
     
+    //Agregar alumno
+    
     public static void agregar(Alumno nuevo, ArrayList<Alumno> dbase){
     
         dbase.add(nuevo);
         
         ordenar(dbase);
+        
+    }
+    
+    //eliminar Alumno
+    
+    public static boolean eliminar(String carnet, ArrayList<Alumno> dbase){
+    
+        int toDel = buscar(carnet, dbase);
+        
+        if(toDel == -1)
+            return false;
+        
+        dbase.remove(toDel);
+        
+        return true;
+    }
+    
+    //editar Alumno
+    
+    public static boolean editar(Alumno editado, ArrayList<Alumno> dbase){
+    
+        int toEdit = buscar(editado.getCarnet(),dbase);
+        
+        if(toEdit == -1)
+            return false;
+        
+        dbase.remove(toEdit);
+        dbase.add(toEdit,editado);
+        
+        return true;
         
     }
     
