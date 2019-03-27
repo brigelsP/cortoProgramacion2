@@ -78,5 +78,13 @@ public class Alumno {
         
     }
     
+    @Override
+    public String toString(){
+        
+        String res = this.carnet + " " + this.apellido + " " + this.nombre + " " + this.grado;
+        
+        return res;
+        
+    }
     
 }

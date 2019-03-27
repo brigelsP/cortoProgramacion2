@@ -12,7 +12,9 @@ public class Control {
     
     public static void ordenar(ArrayList<Alumno> dbase){
     
-        mergeSort(0,dbase.size()-1,dbase);
+        System.out.println(dbase.size());
+        
+        mergeSort(0,dbase.size()-1,dbase,"");
     
     }
     
@@ -67,20 +69,19 @@ public class Control {
         
         while(contA < sizeA && contB < sizeB){
             
-            dbase.remove(contC);
-            
             if(Alumno.compare(arrA[contA],arrB[contB]) < 0){            
                 
-                dbase.add(contC,arrA[contA]);
+                dbase.set(contC,arrA[contA]);
                 
                 contA++;
+                contC++;
             
             }else{
                 
-                dbase.add(contC,arrB[contB]);
+                dbase.set(contC,arrB[contB]);
                 
                 contB++;
-            
+                contC++;
             }
         
         }
@@ -89,8 +90,7 @@ public class Control {
         
         while(contA < sizeA){
         
-            dbase.remove(contC);
-            dbase.add(contC,arrA[contA]);
+            dbase.set(contC,arrA[contA]);
             
             contC++;
             contA++;
@@ -98,9 +98,8 @@ public class Control {
         }       
         
         while(contB < sizeB){
-        
-            dbase.remove(contC);
-            dbase.add(contC,arrB[contB]);
+            
+            dbase.set(contC,arrB[contB]);
             
             contC++;
             contB++;            
@@ -111,22 +110,24 @@ public class Control {
     
     //ordenamiento RECURSIVO
     
-    private static void mergeSort(int inicio, int fin, ArrayList<Alumno> dbase){
+    private static void mergeSort(int inicio, int fin, ArrayList<Alumno> dbase, String space){
         
-        if(inicio > fin)
+        System.out.println(space + inicio + " " + fin);
+        
+        if(inicio >= fin)
             return;
-    
+        
         int  size = fin - inicio + 1;
         
-        int mid = (size/2) - 1;
+        int mid = inicio + (size/2) - 1;
         
         //divide el arreglo en dos
         //ordena esas dos mitades
         //combina esas dos mitades}
         //asi para todo subarreglo
         
-        mergeSort(inicio, mid, dbase);
-        mergeSort(mid+1, fin, dbase);
+        mergeSort(inicio, mid, dbase,space + " ");
+        mergeSort(mid+1, fin, dbase,space + " ");
         
         merge(dbase,inicio,fin);
     
@@ -134,14 +135,14 @@ public class Control {
     
     //busqueda binaria para carnet de alumno
     
-    public static int buscar(String carnet, ArrayList<Alumno> dbase){
+     public static int buscar(String carnet, ArrayList<Alumno> dbase){
     
         int inicio = 0, fin = dbase.size() - 1;
         
         int mid;
         String key;
         
-        while(inicio < fin){
+        while(inicio <= fin){
         
             mid = (inicio + fin)/2;
             key = dbase.get(mid).getCarnet();
@@ -163,8 +164,6 @@ public class Control {
     public static void agregar(Alumno nuevo, ArrayList<Alumno> dbase){
     
         dbase.add(nuevo);
-        
-        ordenar(dbase);
         
     }
     
@@ -196,6 +195,58 @@ public class Control {
         
         return true;
         
+    }
+    
+    public static void main(String args[]){
+    
+        ArrayList<Alumno> dbase  = new ArrayList<>();
+        
+        Alumno a = new Alumno("Luis", "Ramírez","9");
+        Alumno b = new Alumno("Jose","Ramirez","9");
+        Alumno c = new Alumno("Briggels", "Pacheco","6");
+        Alumno d = new Alumno("Ernesto", "Cardona", "7");
+        
+        agregar(a,dbase);
+        agregar(b,dbase);
+        agregar(c,dbase);
+        agregar(d,dbase);
+        
+        ordenar(dbase);
+        
+        System.out.println(dbase.size());
+        
+        for(int i = 0; i < dbase.size(); i++){
+            
+            System.out.println(dbase.get(i));
+            
+        }
+        
+        String search = dbase.get(1).getCarnet();
+        int num = buscar(search,dbase);
+        
+        System.out.println(search + " " + num);
+        
+        eliminar(search,dbase);
+        
+        System.out.println();
+               
+        for(int i = 0; i < dbase.size(); i++){
+            
+            System.out.println(dbase.get(i));
+            
+        }
+        
+        Alumno editado = new Alumno("Jose","Peralta","10",dbase.get(1).getCarnet());
+        
+        editar(editado,dbase);
+        System.out.println();
+        
+        for(int i = 0; i < dbase.size(); i++){
+            
+            System.out.println(dbase.get(i));
+            
+        }
+    
     }
     
 }
