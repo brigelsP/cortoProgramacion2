@@ -8,11 +8,11 @@ public class Control {
     
     public static void ordenar(ArrayList<Alumno> dbase){
     
-        
+        mergeSort(0,dbase.size()-1,dbase);
     
     }
     
-    private static void Merge(ArrayList<Alumno> dbase, int inicio, int fin){
+    private static void merge(ArrayList<Alumno> dbase, int inicio, int fin){
     
         int size = fin - inicio + 1;
         
@@ -71,10 +71,44 @@ public class Control {
         
         }
         
+        while(contA < sizeA){
         
+            dbase.remove(contC);
+            dbase.add(contC,arrA[contA]);
+            
+            contC++;
+            contA++;
+            
+        }       
         
+        while(contB < sizeB){
         
+            dbase.remove(contC);
+            dbase.add(contC,arrB[contB]);
+            
+            contC++;
+            contB++;            
+        
+        }
         
     }
+    
+    private static void mergeSort(int inicio, int fin, ArrayList<Alumno> dbase){
+        
+        if(inicio > fin)
+            return;
+    
+        int  size = fin - inicio + 1;
+        
+        int mid = (size/2) - 1;
+        
+        mergeSort(inicio, mid, dbase);
+        mergeSort(mid+1, fin, dbase);
+        
+        merge(dbase,inicio,fin);
+    
+    }
+    
+    
     
 }
