@@ -10,6 +10,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.KeyAdapter;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
@@ -23,6 +24,7 @@ public class vistaPrincipal extends javax.swing.JFrame {
      * Creates new form vistaPrincipal
      */
     public vistaPrincipal() {
+
         //quitarle los botones de arriba
         vistaPrincipal.super.setUndecorated(true);
 
@@ -39,7 +41,11 @@ public class vistaPrincipal extends javax.swing.JFrame {
         setVisible(true);
 
         initComponents();
-        
+
+        //desabilitar el carnet
+        txtCarnet.setVisible(false);
+        lblCarnet.setVisible(false);
+
         //ubicar el foco en el inicio
         txtNombre.requestFocus();
 
@@ -51,6 +57,8 @@ public class vistaPrincipal extends javax.swing.JFrame {
         Icon icono = new ImageIcon(fot.getImage().getScaledInstance(imagen.getWidth(), imagen.getHeight(), Image.SCALE_DEFAULT));
         imagen.setIcon(icono);
         this.repaint();
+
+      
     }
 
     /**
@@ -79,6 +87,8 @@ public class vistaPrincipal extends javax.swing.JFrame {
         lblAdvertencia = new javax.swing.JLabel();
         imagen = new javax.swing.JLabel();
         btnSalir = new javax.swing.JButton();
+        lblCarnet = new javax.swing.JLabel();
+        txtCarnet = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -117,6 +127,11 @@ public class vistaPrincipal extends javax.swing.JFrame {
         btngOpciones.add(rbtnAgregar);
         rbtnAgregar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         rbtnAgregar.setText("Guardar");
+        rbtnAgregar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rbtnAgregarMouseClicked(evt);
+            }
+        });
         rbtnAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rbtnAgregarActionPerformed(evt);
@@ -131,6 +146,11 @@ public class vistaPrincipal extends javax.swing.JFrame {
         btngOpciones.add(rbtnBuscar);
         rbtnBuscar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         rbtnBuscar.setText("Buscar");
+        rbtnBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rbtnBuscarMouseClicked(evt);
+            }
+        });
         rbtnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rbtnBuscarActionPerformed(evt);
@@ -140,11 +160,19 @@ public class vistaPrincipal extends javax.swing.JFrame {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 rbtnBuscarKeyPressed(evt);
             }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                rbtnBuscarKeyReleased(evt);
+            }
         });
 
         btngOpciones.add(rbtnEditar);
         rbtnEditar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         rbtnEditar.setText("Editar");
+        rbtnEditar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rbtnEditarMouseClicked(evt);
+            }
+        });
         rbtnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rbtnEditarActionPerformed(evt);
@@ -159,6 +187,11 @@ public class vistaPrincipal extends javax.swing.JFrame {
         btngOpciones.add(rbtnEliminar);
         rbtnEliminar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         rbtnEliminar.setText("Eliminar");
+        rbtnEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rbtnEliminarMouseClicked(evt);
+            }
+        });
         rbtnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rbtnEliminarActionPerformed(evt);
@@ -190,6 +223,15 @@ public class vistaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        lblCarnet.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblCarnet.setText("Carnet:");
+
+        txtCarnet.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCarnetKeyPressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -206,8 +248,8 @@ public class vistaPrincipal extends javax.swing.JFrame {
                             .addComponent(rbtnAgregar)
                             .addComponent(lblResultados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(49, 49, 49)
-                        .addComponent(imagen, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(34, 34, 34)
+                        .addComponent(imagen, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
@@ -215,47 +257,58 @@ public class vistaPrincipal extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(lblApellido)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(lblCarnet)
+                                    .addComponent(lblApellido))
                                 .addGap(18, 18, 18)
-                                .addComponent(TxtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(42, 64, Short.MAX_VALUE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(TxtApellido, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
+                                    .addComponent(txtCarnet))))))
+                .addGap(43, 64, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(180, 180, 180)
                 .addComponent(btnAccion)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(261, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(152, 152, 152))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(lblAdvertencia, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
                     .addComponent(btnSalir, javax.swing.GroupLayout.Alignment.TRAILING)))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(151, 151, 151))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(btnSalir)
-                .addGap(43, 43, 43)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnSalir)
                     .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(53, 53, 53)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblNombre)
+                                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(lblApellido)
+                                    .addComponent(TxtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(45, 45, 45)
+                                .addComponent(imagen, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblNombre)
-                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(23, 23, 23)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblApellido)
-                            .addComponent(TxtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addComponent(imagen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(lblCarnet)
+                            .addComponent(txtCarnet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblAdvertencia, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel1)
-                .addGap(8, 8, 8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(rbtnAgregar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(rbtnBuscar)
@@ -263,13 +316,13 @@ public class vistaPrincipal extends javax.swing.JFrame {
                 .addComponent(rbtnEditar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(rbtnEliminar)
-                .addGap(18, 18, 18)
+                .addGap(4, 4, 4)
                 .addComponent(btnAccion)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(lblResultados, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(lblResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(39, 39, 39))
         );
 
         pack();
@@ -297,11 +350,30 @@ public class vistaPrincipal extends javax.swing.JFrame {
 
     private void btnAccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAccionActionPerformed
         // TODO add your handling code here:
-        if (txtNombre.getText().equals("") || TxtApellido.getText().equals("")) {
-            lblAdvertencia.setText("Datos no validos");
-        }
-    }//GEN-LAST:event_btnAccionActionPerformed
+       
+        if (rbtnBuscar.isSelected() || rbtnEditar.isSelected() || rbtnEliminar.isSelected()) {
 
+            if (txtCarnet.getText().equals("")||txtNombre.getText().equals("") || TxtApellido.getText().equals("")) {
+                lblAdvertencia.setText("Datos no validos");
+
+            } else {
+                lblAdvertencia.setText("");
+                System.out.println("funciona");
+            }
+
+    }//GEN-LAST:event_btnAccionActionPerformed
+        else {
+            
+             if (txtNombre.getText().equals("") || TxtApellido.getText().equals("")) {
+            lblAdvertencia.setText("Datos no validos");
+        } else {
+            lblAdvertencia.setText("");
+                            System.out.println("funciona");
+
+        }
+
+        }
+    }
     private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
         // TODO add your handling code here:
         if (Character.isDigit(evt.getKeyChar()) || evt.getKeyChar() == KeyEvent.VK_SPACE) {
@@ -364,6 +436,45 @@ public class vistaPrincipal extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
 
+    private void rbtnBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_rbtnBuscarKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rbtnBuscarKeyReleased
+
+    private void rbtnBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbtnBuscarMouseClicked
+        // TODO add your handling code here:
+        txtCarnet.setVisible(true);
+        lblCarnet.setVisible(true);
+        txtCarnet.requestFocus();
+    }//GEN-LAST:event_rbtnBuscarMouseClicked
+
+    private void rbtnEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbtnEditarMouseClicked
+        // TODO add your handling code here:
+        txtCarnet.setVisible(true);
+        lblCarnet.setVisible(true);
+        txtCarnet.requestFocus();
+    }//GEN-LAST:event_rbtnEditarMouseClicked
+
+    private void rbtnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbtnEliminarMouseClicked
+        // TODO add your handling code here:
+        txtCarnet.setVisible(true);
+        lblCarnet.setVisible(true);
+        txtCarnet.requestFocus();
+    }//GEN-LAST:event_rbtnEliminarMouseClicked
+
+    private void rbtnAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbtnAgregarMouseClicked
+        // TODO add your handling code here:
+         txtCarnet.setVisible(false);
+        lblCarnet.setVisible(false);
+    }//GEN-LAST:event_rbtnAgregarMouseClicked
+
+    private void txtCarnetKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCarnetKeyPressed
+        // TODO add your handling code here:
+         if (evt.getKeyChar() == KeyEvent.VK_ENTER) {
+            btnAccion.doClick();
+        }
+
+    }//GEN-LAST:event_txtCarnetKeyPressed
+
     /**
      * @param args the command line arguments
      */
@@ -409,6 +520,7 @@ public class vistaPrincipal extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblAdvertencia;
     private javax.swing.JLabel lblApellido;
+    private javax.swing.JLabel lblCarnet;
     private javax.swing.JLabel lblNombre;
     private javax.swing.JLabel lblResultados;
     private javax.swing.JList<String> lstEstudiantes;
@@ -416,6 +528,7 @@ public class vistaPrincipal extends javax.swing.JFrame {
     private javax.swing.JRadioButton rbtnBuscar;
     private javax.swing.JRadioButton rbtnEditar;
     private javax.swing.JRadioButton rbtnEliminar;
+    private javax.swing.JTextField txtCarnet;
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 }
