@@ -3,42 +3,46 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package corto;
+package gui;
 
-import com.sun.glass.events.KeyEvent;
+import Logic.Alumno;
+import Logic.Control;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.awt.event.KeyAdapter;
+import java.util.ArrayList;
+import javax.swing.DefaultListModel;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.ListModel;
 
 /**
  *
  * @author Brigels Pacheco
  */
 public class vistaPrincipal extends javax.swing.JFrame {
-
-    /**
-     * Creates new form vistaPrincipal
-     */
+    
+    private ArrayList<Alumno> dB = new ArrayList<>();
+    
+    
+    //CREATOR
     public vistaPrincipal() {
-
+        
         //quitarle los botones de arriba
         vistaPrincipal.super.setUndecorated(true);
 
         //color de fondo
-        this.getContentPane().setBackground(Color.decode("#808080"));
+        this.getContentPane().setBackground(Color.decode( "#FFFFFF"));
 
         //centrarlo
         Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
         int height = pantalla.height;
         int width = pantalla.width;
-        setSize(width / 2, height);
-
+        setSize(height - (height / 3), width - ( 14 * width / 24));
         setLocationRelativeTo(null);
-        setVisible(true);
+//        setVisible(true);
 
         initComponents();
 
@@ -46,6 +50,8 @@ public class vistaPrincipal extends javax.swing.JFrame {
         txtCarnet.setVisible(false);
         lblCarnet.setVisible(false);
 
+        //desabilitar warning.
+        lblWarning.setVisible(false);
         //ubicar el foco en el inicio
         txtNombre.requestFocus();
 
@@ -71,10 +77,11 @@ public class vistaPrincipal extends javax.swing.JFrame {
     private void initComponents() {
 
         btngOpciones = new javax.swing.ButtonGroup();
+        jLabel2 = new javax.swing.JLabel();
         lblNombre = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
         lblApellido = new javax.swing.JLabel();
-        TxtApellido = new javax.swing.JTextField();
+        txtApellido = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         rbtnAgregar = new javax.swing.JRadioButton();
         rbtnBuscar = new javax.swing.JRadioButton();
@@ -89,35 +96,28 @@ public class vistaPrincipal extends javax.swing.JFrame {
         btnSalir = new javax.swing.JButton();
         lblCarnet = new javax.swing.JLabel();
         txtCarnet = new javax.swing.JTextField();
+        lblWarning = new javax.swing.JLabel();
+        lblResult = new javax.swing.JLabel();
+
+        jLabel2.setText("jLabel2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         lblNombre.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblNombre.setText("Nombre:");
 
-        txtNombre.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNombreActionPerformed(evt);
-            }
-        });
         txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtNombreKeyPressed(evt);
-            }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtNombreKeyTyped(evt);
             }
         });
 
         lblApellido.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblApellido.setText("Apellido:");
 
-        TxtApellido.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtApellido.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                TxtApellidoKeyPressed(evt);
-            }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                TxtApellidoKeyTyped(evt);
+                txtApellidoKeyPressed(evt);
             }
         });
 
@@ -126,12 +126,7 @@ public class vistaPrincipal extends javax.swing.JFrame {
 
         btngOpciones.add(rbtnAgregar);
         rbtnAgregar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        rbtnAgregar.setText("Guardar");
-        rbtnAgregar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                rbtnAgregarMouseClicked(evt);
-            }
-        });
+        rbtnAgregar.setText("Agregar");
         rbtnAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rbtnAgregarActionPerformed(evt);
@@ -146,11 +141,6 @@ public class vistaPrincipal extends javax.swing.JFrame {
         btngOpciones.add(rbtnBuscar);
         rbtnBuscar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         rbtnBuscar.setText("Buscar");
-        rbtnBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                rbtnBuscarMouseClicked(evt);
-            }
-        });
         rbtnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rbtnBuscarActionPerformed(evt);
@@ -160,19 +150,11 @@ public class vistaPrincipal extends javax.swing.JFrame {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 rbtnBuscarKeyPressed(evt);
             }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                rbtnBuscarKeyReleased(evt);
-            }
         });
 
         btngOpciones.add(rbtnEditar);
         rbtnEditar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         rbtnEditar.setText("Editar");
-        rbtnEditar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                rbtnEditarMouseClicked(evt);
-            }
-        });
         rbtnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rbtnEditarActionPerformed(evt);
@@ -187,11 +169,6 @@ public class vistaPrincipal extends javax.swing.JFrame {
         btngOpciones.add(rbtnEliminar);
         rbtnEliminar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         rbtnEliminar.setText("Eliminar");
-        rbtnEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                rbtnEliminarMouseClicked(evt);
-            }
-        });
         rbtnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rbtnEliminarActionPerformed(evt);
@@ -232,21 +209,25 @@ public class vistaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        lblWarning.setForeground(new java.awt.Color(255, 0, 51));
+        lblWarning.setText("**CAMPOS INCOMPLETOS**");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(151, 151, 151))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblAdvertencia, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSalir, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(72, 72, 72)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane1)
-                            .addComponent(rbtnEliminar)
-                            .addComponent(rbtnEditar)
-                            .addComponent(rbtnBuscar)
-                            .addComponent(rbtnAgregar)
-                            .addComponent(lblResultados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(34, 34, 34)
                         .addComponent(imagen, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -256,56 +237,63 @@ public class vistaPrincipal extends javax.swing.JFrame {
                                 .addComponent(lblNombre)
                                 .addGap(18, 18, 18)
                                 .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(lblCarnet)
-                                    .addComponent(lblApellido))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(TxtApellido, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
-                                    .addComponent(txtCarnet))))))
-                .addGap(43, 64, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(180, 180, 180)
-                .addComponent(btnAccion)
-                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(lblWarning, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(lblApellido)
+                                        .addComponent(lblCarnet))
+                                    .addGap(18, 18, 18)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(txtApellido, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
+                                        .addComponent(txtCarnet))))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(72, 72, 72)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(rbtnEliminar)
+                            .addComponent(rbtnEditar)
+                            .addComponent(rbtnBuscar)
+                            .addComponent(rbtnAgregar)
+                            .addComponent(lblResultados, javax.swing.GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE)
+                            .addComponent(lblResult, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(180, 180, 180)
+                        .addComponent(btnAccion)))
+                .addGap(43, 66, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(261, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(lblAdvertencia, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addComponent(btnSalir, javax.swing.GroupLayout.Alignment.TRAILING)))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(151, 151, 151))
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnSalir)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(45, 45, 45)
+                        .addComponent(imagen, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnSalir)
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(53, 53, 53)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblNombre)
-                                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(lblApellido)
-                                    .addComponent(TxtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(45, 45, 45)
-                                .addComponent(imagen, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(lblNombre)
+                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblCarnet)
-                            .addComponent(txtCarnet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblAdvertencia, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblApellido)
+                            .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtCarnet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblCarnet))))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addComponent(lblAdvertencia, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblWarning)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -318,9 +306,11 @@ public class vistaPrincipal extends javax.swing.JFrame {
                 .addComponent(rbtnEliminar)
                 .addGap(4, 4, 4)
                 .addComponent(btnAccion)
-                .addGap(18, 18, 18)
+                .addGap(11, 11, 11)
+                .addComponent(lblResult)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(39, 39, 39))
         );
@@ -328,153 +318,184 @@ public class vistaPrincipal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNombreActionPerformed
-
-    private void rbtnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnAgregarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_rbtnAgregarActionPerformed
-
-    private void rbtnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnBuscarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_rbtnBuscarActionPerformed
-
-    private void rbtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnEliminarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_rbtnEliminarActionPerformed
-
-    private void rbtnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnEditarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_rbtnEditarActionPerformed
-
-    private void btnAccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAccionActionPerformed
-        // TODO add your handling code here:
-       
-        if (rbtnBuscar.isSelected() || rbtnEditar.isSelected() || rbtnEliminar.isSelected()) {
-
-            if (txtCarnet.getText().equals("")||txtNombre.getText().equals("") || TxtApellido.getText().equals("")) {
-                lblAdvertencia.setText("Datos no validos");
-
-            } else {
-                lblAdvertencia.setText("");
-                System.out.println("funciona");
-            }
-
-    }//GEN-LAST:event_btnAccionActionPerformed
-        else {
-            
-             if (txtNombre.getText().equals("") || TxtApellido.getText().equals("")) {
-            lblAdvertencia.setText("Datos no validos");
-        } else {
-            lblAdvertencia.setText("");
-                            System.out.println("funciona");
-
-        }
-
-        }
-    }
-    private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
-        // TODO add your handling code here:
-        if (Character.isDigit(evt.getKeyChar()) || evt.getKeyChar() == KeyEvent.VK_SPACE) {
-            evt.consume();
-        }
-    }//GEN-LAST:event_txtNombreKeyTyped
-
-    private void TxtApellidoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtApellidoKeyTyped
-        // TODO add your handling code here:
-        if (Character.isDigit(evt.getKeyChar()) || evt.getKeyChar() == KeyEvent.VK_SPACE) {
-            evt.consume();
-        }
-    }//GEN-LAST:event_TxtApellidoKeyTyped
-
-    private void txtNombreKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyPressed
-        // TODO add your handling code here:
-        if (evt.getKeyChar() == KeyEvent.VK_ENTER) {
-            TxtApellido.requestFocus();
-        }
-
-    }//GEN-LAST:event_txtNombreKeyPressed
-
-    private void TxtApellidoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtApellidoKeyPressed
-        // TODO add your handling code here:
-        if (evt.getKeyChar() == KeyEvent.VK_ENTER) {
-            rbtnAgregar.requestFocus();
-        }
-    }//GEN-LAST:event_TxtApellidoKeyPressed
-
-    private void rbtnAgregarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_rbtnAgregarKeyPressed
-        // TODO add your handling code here:
-        if (evt.getKeyChar() == KeyEvent.VK_ENTER) {
-            btnAccion.doClick();
-        }
-    }//GEN-LAST:event_rbtnAgregarKeyPressed
-
-    private void rbtnBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_rbtnBuscarKeyPressed
-        // TODO add your handling code here:
-        if (evt.getKeyChar() == KeyEvent.VK_ENTER) {
-            btnAccion.doClick();
-        }
-    }//GEN-LAST:event_rbtnBuscarKeyPressed
-
-    private void rbtnEditarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_rbtnEditarKeyPressed
-        // TODO add your handling code here:
-        if (evt.getKeyChar() == KeyEvent.VK_ENTER) {
-            btnAccion.doClick();
-        }
-    }//GEN-LAST:event_rbtnEditarKeyPressed
-
-    private void rbtnEliminarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_rbtnEliminarKeyPressed
-        // TODO add your handling code here:
-        if (evt.getKeyChar() == KeyEvent.VK_ENTER) {
-            btnAccion.doClick();
-        }
-    }//GEN-LAST:event_rbtnEliminarKeyPressed
-
+    //CERRAR EL DOCUMENTO.
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
 
-    private void rbtnBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_rbtnBuscarKeyReleased
+    //CONTROLAR EL FLUJO A TRAVEZ DE TABS O ENTERS.
+    private void txtNombreKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyPressed
         // TODO add your handling code here:
-    }//GEN-LAST:event_rbtnBuscarKeyReleased
+        if( evt.getKeyChar() == '\t' || evt.getKeyChar() == '\n'){
+            txtApellido.requestFocus();
+        }
+    }//GEN-LAST:event_txtNombreKeyPressed
 
-    private void rbtnBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbtnBuscarMouseClicked
+    private void txtApellidoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidoKeyPressed
         // TODO add your handling code here:
-        txtCarnet.setVisible(true);
-        lblCarnet.setVisible(true);
-        txtCarnet.requestFocus();
-    }//GEN-LAST:event_rbtnBuscarMouseClicked
-
-    private void rbtnEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbtnEditarMouseClicked
-        // TODO add your handling code here:
-        txtCarnet.setVisible(true);
-        lblCarnet.setVisible(true);
-        txtCarnet.requestFocus();
-    }//GEN-LAST:event_rbtnEditarMouseClicked
-
-    private void rbtnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbtnEliminarMouseClicked
-        // TODO add your handling code here:
-        txtCarnet.setVisible(true);
-        lblCarnet.setVisible(true);
-        txtCarnet.requestFocus();
-    }//GEN-LAST:event_rbtnEliminarMouseClicked
-
-    private void rbtnAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbtnAgregarMouseClicked
-        // TODO add your handling code here:
-         txtCarnet.setVisible(false);
-        lblCarnet.setVisible(false);
-    }//GEN-LAST:event_rbtnAgregarMouseClicked
+        if( evt.getKeyChar() == '\t' || evt.getKeyChar() == '\n'){
+            if(txtCarnet.isShowing()) txtCarnet.requestFocus();
+            else rbtnAgregar.requestFocus();
+        }
+    }//GEN-LAST:event_txtApellidoKeyPressed
 
     private void txtCarnetKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCarnetKeyPressed
-        // TODO add your handling code here:
-         if (evt.getKeyChar() == KeyEvent.VK_ENTER) {
-            btnAccion.doClick();
+        if( evt.getKeyChar() == '\t' || evt.getKeyChar() == '\n'){
+            rbtnAgregar.requestFocus();
+            rbtnAgregar.doClick();
         }
-
     }//GEN-LAST:event_txtCarnetKeyPressed
 
+    private void rbtnAgregarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_rbtnAgregarKeyPressed
+        // TODO add your handling code here:
+        if( evt.getKeyChar() == '\t' || evt.getKeyChar() == '\n'){
+            rbtnBuscar.requestFocus();
+            rbtnBuscar.doClick();
+        }
+    }//GEN-LAST:event_rbtnAgregarKeyPressed
+
+    private void rbtnBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_rbtnBuscarKeyPressed
+        // TODO add your handling code here:
+        if( evt.getKeyChar() == '\t' || evt.getKeyChar() == '\n'){
+            rbtnEditar.requestFocus();
+            rbtnEditar.doClick();
+        }
+    }//GEN-LAST:event_rbtnBuscarKeyPressed
+
+    private void rbtnEditarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_rbtnEditarKeyPressed
+        // TODO add your handling code here:
+        if( evt.getKeyChar() == '\t' || evt.getKeyChar() == '\n'){
+            rbtnEliminar.requestFocus();
+            rbtnEliminar.doClick();
+        }
+    }//GEN-LAST:event_rbtnEditarKeyPressed
+
+    private void rbtnEliminarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_rbtnEliminarKeyPressed
+        // TODO add your handling code here:
+        if( evt.getKeyChar() == '\t' || evt.getKeyChar() == '\n'){
+            btnAccion.requestFocus();
+        }
+    }//GEN-LAST:event_rbtnEliminarKeyPressed
+
+    //HABILITAR EL CAMPO DE CARNET.
+    private void rbtnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnBuscarActionPerformed
+        // TODO add your handling code here:
+        txtCarnet.setVisible(true);
+        lblCarnet.setVisible(true);
+    }//GEN-LAST:event_rbtnBuscarActionPerformed
+
+    private void rbtnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnEditarActionPerformed
+        // TODO add your handling code here:
+        txtCarnet.setVisible(true);
+        lblCarnet.setVisible(true);
+    }//GEN-LAST:event_rbtnEditarActionPerformed
+
+    private void rbtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnEliminarActionPerformed
+        // TODO add your handling code here:
+        txtCarnet.setVisible(true);
+        lblCarnet.setVisible(true);
+    }//GEN-LAST:event_rbtnEliminarActionPerformed
+
+    //DESABILITAR EL CAMPO DE CARNET.    
+    private void rbtnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnAgregarActionPerformed
+        // TODO add your handling code here:
+        txtCarnet.setVisible(false);
+        lblCarnet.setVisible(false);
+    }//GEN-LAST:event_rbtnAgregarActionPerformed
+
+    //REALIZAR ACCION DE RELACION.
+    private void btnAccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAccionActionPerformed
+        // TODO add your handling code here:
+        
+        if( rbtnAgregar.isSelected() ){
+            
+            if( txtNombre.getText().isEmpty() || txtApellido.getText().isEmpty()){
+                lblWarning.setVisible(true);
+                return;
+            }else{
+                lblWarning.setVisible(false);
+            }
+            
+            String Nombre = txtNombre.getText();
+            String Apellido = txtApellido.getText();
+            String Grado = Integer.toString(Alumno.rel);
+            Alumno.rel++;
+            
+            Alumno Nuevo = new Alumno(Nombre, Apellido, Grado);
+            Control.agregar(Nuevo, dB);
+            lblResult.setText("Usuario Agregado: " + Nuevo.toString() );
+        }
+        
+        if( rbtnBuscar.isSelected() ){
+            if( txtCarnet.getText().isEmpty() ){
+                lblWarning.setVisible(true);
+                return;
+            }else{
+                lblWarning.setVisible(false);
+            }
+            String Carnet = txtCarnet.getText();
+            int target = Control.buscar(Carnet, dB);
+            
+            if( target == -1){
+                lblResult.setText("Resultado de Busqueda: Usuario no encontrado.");
+            }else{
+                Alumno encontrado = dB.get(target);
+                lblResult.setText("Resultado de Busqueda: " + encontrado.toString());
+            }
+        }
+        
+        if( rbtnEditar.isSelected() ){
+            if( txtCarnet.getText().isEmpty() ){
+                lblWarning.setVisible(true);
+                return;
+            }else{
+                lblWarning.setVisible(false);
+            }
+            String nombre = txtNombre.getText();
+            String apellido = txtApellido.getText();
+            String carnet = txtCarnet.getText();
+            
+            int target = Control.buscar(carnet, dB);
+            if( target == -1 ){
+                lblResult.setText( "Usuario no encontrado" );
+            }else{
+                lblResult.setText( "Cambios Realizados");
+                dB.get(target).setNombre(nombre);
+                dB.get(target).setApellido(apellido);
+            }
+        }
+        
+        if( rbtnEliminar.isSelected() ){
+            if( txtCarnet.getText().isEmpty() ){
+                lblWarning.setVisible(true);
+                return;
+            }else{
+                lblWarning.setVisible(false);
+            }
+            String carnet = txtCarnet.getText();
+            if(Control.eliminar(carnet, dB)){
+                lblResult.setText("Usuario Eliminado");
+            }else{
+                lblResult.setText("Usuario no encontrado");
+            }
+        }
+        
+        Control.ordenar(dB);
+        int size = dB.size();
+        //JOptionPane.showMessageDialog(null, size);
+        DefaultListModel dB_String = new DefaultListModel();
+        for(int i = 0; i < size; i++){
+            dB_String.addElement( dB.get(i).toString() );
+        }
+        
+        lstEstudiantes.setModel(dB_String);
+        
+    }//GEN-LAST:event_btnAccionActionPerformed
+    
+    
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -505,29 +526,33 @@ public class vistaPrincipal extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                
                 new vistaPrincipal().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField TxtApellido;
     private javax.swing.JButton btnAccion;
     private javax.swing.JButton btnSalir;
     private javax.swing.ButtonGroup btngOpciones;
     private javax.swing.JLabel imagen;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblAdvertencia;
     private javax.swing.JLabel lblApellido;
     private javax.swing.JLabel lblCarnet;
     private javax.swing.JLabel lblNombre;
+    private javax.swing.JLabel lblResult;
     private javax.swing.JLabel lblResultados;
+    private javax.swing.JLabel lblWarning;
     private javax.swing.JList<String> lstEstudiantes;
     private javax.swing.JRadioButton rbtnAgregar;
     private javax.swing.JRadioButton rbtnBuscar;
     private javax.swing.JRadioButton rbtnEditar;
     private javax.swing.JRadioButton rbtnEliminar;
+    private javax.swing.JTextField txtApellido;
     private javax.swing.JTextField txtCarnet;
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables

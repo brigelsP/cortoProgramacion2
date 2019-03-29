@@ -13,7 +13,7 @@ public class Control {
     public static void ordenar(ArrayList<Alumno> dbase){
     
         System.out.println(dbase.size());
-        
+ 
         mergeSort(0,dbase.size()-1,dbase,"");
     
     }
@@ -112,7 +112,7 @@ public class Control {
     
     private static void mergeSort(int inicio, int fin, ArrayList<Alumno> dbase, String space){
         
-        System.out.println(space + inicio + " " + fin);
+        //System.out.println(space + inicio + " " + fin);
         
         if(inicio >= fin)
             return;
@@ -181,72 +181,5 @@ public class Control {
         return true;
     }
     
-    //editar Alumno
-    
-    public static boolean editar(Alumno editado, ArrayList<Alumno> dbase){
-    
-        int toEdit = buscar(editado.getCarnet(),dbase);
-        
-        if(toEdit == -1)
-            return false;
-        
-        dbase.remove(toEdit);
-        dbase.add(toEdit,editado);
-        
-        return true;
-        
-    }
-    
-    public static void main(String args[]){
-    
-        ArrayList<Alumno> dbase  = new ArrayList<>();
-        
-        Alumno a = new Alumno("Luis", "Ramírez","9");
-        Alumno b = new Alumno("Jose","Ramirez","9");
-        Alumno c = new Alumno("Briggels", "Pacheco","6");
-        Alumno d = new Alumno("Ernesto", "Cardona", "7");
-        
-        agregar(a,dbase);
-        agregar(b,dbase);
-        agregar(c,dbase);
-        agregar(d,dbase);
-        
-        ordenar(dbase);
-        
-        System.out.println(dbase.size());
-        
-        for(int i = 0; i < dbase.size(); i++){
-            
-            System.out.println(dbase.get(i));
-            
-        }
-        
-        String search = dbase.get(1).getCarnet();
-        int num = buscar(search,dbase);
-        
-        System.out.println(search + " " + num);
-        
-        eliminar(search,dbase);
-        
-        System.out.println();
-               
-        for(int i = 0; i < dbase.size(); i++){
-            
-            System.out.println(dbase.get(i));
-            
-        }
-        
-        Alumno editado = new Alumno("Jose","Peralta","10",dbase.get(1).getCarnet());
-        
-        editar(editado,dbase);
-        System.out.println();
-        
-        for(int i = 0; i < dbase.size(); i++){
-            
-            System.out.println(dbase.get(i));
-            
-        }
-    
-    }
     
 }

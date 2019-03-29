@@ -1,9 +1,11 @@
 package Logic;
+
 public class Alumno {
     private String nombre;
     private String apellido;
     private String grado;
     private String carnet;
+    public static int rel = 0;
     
     private Alumno(){}
 
@@ -57,16 +59,13 @@ public class Alumno {
         this.carnet = carnet;
     }
     
-    //Generador de carnet con correlativo
-    
-    private static int rel = 0;
-    
+    //Generador de carnet con correlativo    
     public static String generate(String nombre, String apellido, String grado){
     
-        nombre = nombre.toLowerCase();
-        apellido = apellido.toLowerCase();
+        nombre = nombre.toUpperCase();
+        apellido = apellido.toUpperCase();
         
-        return grado + nombre.charAt(0) + apellido.charAt(0) + String.valueOf(rel++);
+        return nombre.charAt(0) + "" + apellido.charAt(0) + "" + grado;
     
     }
     
@@ -81,7 +80,7 @@ public class Alumno {
     @Override
     public String toString(){
         
-        String res = this.carnet + " " + this.apellido + " " + this.nombre + " " + this.grado;
+        String res = this.nombre + " " + this.apellido + ": " + this.carnet;
         
         return res;
         
