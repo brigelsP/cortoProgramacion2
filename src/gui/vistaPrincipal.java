@@ -408,8 +408,10 @@ public class vistaPrincipal extends javax.swing.JFrame {
     private void btnAccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAccionActionPerformed
         // TODO add your handling code here:
         
+        //agregar un elemento.
         if( rbtnAgregar.isSelected() ){
-            
+                
+            //si algun campo esta incompleto.
             if( txtNombre.getText().isEmpty() || txtApellido.getText().isEmpty()){
                 lblWarning.setVisible(true);
                 return;
@@ -417,26 +419,35 @@ public class vistaPrincipal extends javax.swing.JFrame {
                 lblWarning.setVisible(false);
             }
             
+            //asignando valores para ingresar al alumno nuevo
             String Nombre = txtNombre.getText();
             String Apellido = txtApellido.getText();
             String Grado = Integer.toString(Alumno.rel);
             Alumno.rel++;
             
+            //agregando alumno.
             Alumno Nuevo = new Alumno(Nombre, Apellido, Grado);
             Control.agregar(Nuevo, dB);
+            
+            //informando cambio.
             lblResult.setText("Usuario Agregado: " + Nuevo.toString() );
         }
         
         if( rbtnBuscar.isSelected() ){
+            //validar si algun campo esta incompleto.
             if( txtCarnet.getText().isEmpty() ){
                 lblWarning.setVisible(true);
                 return;
             }else{
                 lblWarning.setVisible(false);
             }
+            
+            //buscando resultados
             String Carnet = txtCarnet.getText();
             int target = Control.buscar(Carnet, dB);
             
+            
+            //presentando resultados.
             if( target == -1){
                 lblResult.setText("Resultado de Busqueda: Usuario no encontrado.");
             }else{
@@ -446,6 +457,8 @@ public class vistaPrincipal extends javax.swing.JFrame {
         }
         
         if( rbtnEditar.isSelected() ){
+            
+            //validando datos.
             if( txtCarnet.getText().isEmpty() ){
                 lblWarning.setVisible(true);
                 return;
@@ -457,6 +470,8 @@ public class vistaPrincipal extends javax.swing.JFrame {
             String carnet = txtCarnet.getText();
             
             int target = Control.buscar(carnet, dB);
+            
+            //presenta y edita la informacion
             if( target == -1 ){
                 lblResult.setText( "Usuario no encontrado" );
             }else{
@@ -481,9 +496,12 @@ public class vistaPrincipal extends javax.swing.JFrame {
             }
         }
         
+        //reordena informacion obtenida.
         Control.ordenar(dB);
         int size = dB.size();
         //JOptionPane.showMessageDialog(null, size);
+        
+        //reimprime la informacion.
         DefaultListModel dB_String = new DefaultListModel();
         for(int i = 0; i < size; i++){
             dB_String.addElement( dB.get(i).toString() );
